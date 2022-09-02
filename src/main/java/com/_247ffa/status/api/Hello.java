@@ -14,6 +14,6 @@ public class Hello implements Function<Mono<User>, Mono<Greeting>> {
 
     public Mono<Greeting> apply(Mono<User> mono) {
     	// standard api to transform one bean into another
-        return mono.map(user -> new Greeting("Hello, " + user.getName() + "!\n"));
+        return mono.map(user -> new Greeting("Goodbye, " + user.getName() + "!\n"));
     }
 }
