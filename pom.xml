@@ -99,7 +99,7 @@
 				<plugin>
 					<groupId>io.gatling</groupId>
 					<artifactId>gatling-maven-plugin</artifactId>
-					<version>4.1.5</version>
+					<version>4.2.6</version>
 					<configuration>
 						<includes>
 							<include>com.example.loadtest.*</include>
