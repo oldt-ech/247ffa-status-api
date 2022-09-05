@@ -28,5 +28,4 @@ public class Session {
 	public void setMapname(String mapname) {
 		this.mapname = mapname;
 	}
-
 }
