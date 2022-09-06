@@ -25,8 +25,6 @@ import reactor.core.scheduler.Schedulers;
 @Component
 public class Servers implements Function<ServerFilter, Flux<Server>> {
 
-	private static final Logger logger = LoggerFactory.getLogger(Servers.class);
-
 	@Value("#{${urls}}")
 	private List<String> urls;
 
@@ -43,14 +41,6 @@ public class Servers implements Function<ServerFilter, Flux<Server>> {
 			server.setId(extractor.extractId(url));
 			doc.ifPresent(document -> server.setName(extractor.extractName(document))
 					.setSession(extractor.extractSession(document)));
-			try {
-				// todo: maybe just log response body...?
-				ObjectMapper mapper = new ObjectMapper();
-				mapper.registerModule(new Jdk8Module());
-				logger.info("server=" + mapper.writeValueAsString(server));
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			}
 			return server;
 		})).subscribeOn(Schedulers.parallel());
 	}
