@@ -3,6 +3,7 @@ package com._247ffa.status.api.stat.dao;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
@@ -44,7 +45,7 @@ public class StatDAO {
 				+ " and c.currentPlayers > 0" // 0 = server offline
 				+ " and c.date >= " + LocalDate.now().minus(1, ChronoUnit.WEEKS) + " group by c.date";
 
-		return container.queryItems(sql, new CosmosQueryRequestOptions(), ConnectedPlayers.class).stream().toList();
+		return container.queryItems(sql, new CosmosQueryRequestOptions(), ConnectedPlayers.class).stream().collect(Collectors.toList());
 	}
 
 	public List<PopularMap> getPopularMaps() {
@@ -52,7 +53,7 @@ public class StatDAO {
 				+ " WHERE c.miniProfileId in ('1426333927','1426388016','1425838691','1128505857','1426512674','1426297538')"
 				+ " and c.currentPlayers > 0" + " and c.map <> \"In Lobby\"" + " group by c.map";
 
-		return container.queryItems(sql, new CosmosQueryRequestOptions(), PopularMap.class).stream().toList();
+		return container.queryItems(sql, new CosmosQueryRequestOptions(), PopularMap.class).stream().collect(Collectors.toList());
 	}
 
 	public List<ServersOnline> getServersOnline() {
@@ -61,7 +62,7 @@ public class StatDAO {
 				+ " and c.currentPlayers > 0" + " and c.date >= " + LocalDate.now().minus(1, ChronoUnit.WEEKS)
 				+ " group by c.date";
 
-		return container.queryItems(sql, new CosmosQueryRequestOptions(), ServersOnline.class).stream().toList();
+		return container.queryItems(sql, new CosmosQueryRequestOptions(), ServersOnline.class).stream().collect(Collectors.toList());
 	}
 
 	public Stats getStats() {
