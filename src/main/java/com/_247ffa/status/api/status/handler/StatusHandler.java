@@ -1,11 +1,11 @@
-package com._247ffa.status.api.handler;
+package com._247ffa.status.api.status.handler;
 
 import java.util.Optional;
 
 import org.springframework.cloud.function.adapter.azure.FunctionInvoker;
 
-import com._247ffa.status.api.model.Server;
-import com._247ffa.status.api.model.ServerFilter;
+import com._247ffa.status.api.status.model.Server;
+import com._247ffa.status.api.status.model.ServerFilter;
 import com.microsoft.azure.functions.ExecutionContext;
 import com.microsoft.azure.functions.HttpMethod;
 import com.microsoft.azure.functions.HttpRequestMessage;
@@ -17,7 +17,7 @@ import com.microsoft.azure.functions.annotation.HttpTrigger;
 
 import reactor.core.publisher.Flux;
 
-public class ServersHandler extends FunctionInvoker<ServerFilter, Flux<Server>> {
+public class StatusHandler extends FunctionInvoker<ServerFilter, Flux<Server>> {
 
 	@FunctionName("v1servers")
 	public HttpResponseMessage execute(@HttpTrigger(name = "request", route = "v1/servers", methods = {

@@ -1,11 +1,11 @@
-package com._247ffa.status.api.service;
+package com._247ffa.status.api.status.service;
 
 import java.util.Optional;
 
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
 
-import com._247ffa.status.api.model.Session;
+import com._247ffa.status.api.status.model.Session;
 
 @Service
 public class ExtractionService {
