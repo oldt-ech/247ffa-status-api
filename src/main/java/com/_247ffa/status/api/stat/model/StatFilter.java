@@ -1,6 +1,6 @@
-package com._247ffa.status.api.model;
+package com._247ffa.status.api.stat.model;
 
-public class ServerFilter {
+public class StatFilter {
 	private String grouping;
 
 	public String getFilter() {
@@ -10,5 +10,4 @@ public class ServerFilter {
 	public void setFilter(String grouping) {
 		this.grouping = grouping;
 	}
-
 }

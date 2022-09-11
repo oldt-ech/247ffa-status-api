@@ -1,4 +1,4 @@
-package com._247ffa.status.api.service;
+package com._247ffa.status.api.status.service;
 
 import java.io.IOException;
 import java.util.Optional;

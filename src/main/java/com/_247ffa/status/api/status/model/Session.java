@@ -1,4 +1,4 @@
-package com._247ffa.status.api.model;
+package com._247ffa.status.api.status.model;
 
 public class Session {
 	private int currentPlayers;
