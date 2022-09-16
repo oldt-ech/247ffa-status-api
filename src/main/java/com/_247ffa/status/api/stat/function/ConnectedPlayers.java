@@ -1,5 +1,6 @@
 package com._247ffa.status.api.stat.function;
 
+import java.util.List;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,15 @@ public class ConnectedPlayers implements Function<StatFilter, Report<?>> {
 	@Override
 	public Report<?> apply(StatFilter filter) {
 		return reportService.getReport("v1statsplayers", () -> {
+			List<com._247ffa.status.api.stat.model.ConnectedPlayers> items = statDAO.getConnectedPlayers();
+
+			items = reportService.removeNoise(items,
+					(previous, current) -> previous.getConnectedPlayers() != current.getConnectedPlayers());
+
 			return new Report<com._247ffa.status.api.stat.model.ConnectedPlayers>(
 					"Player connection history for 247ffa.com hosted QE servers. "
 							+ "Stats for last seven days. Host player is excluded from totals",
-					statDAO.getConnectedPlayers());
+					items);
 		});
 	}
 

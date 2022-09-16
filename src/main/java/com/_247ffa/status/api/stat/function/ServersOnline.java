@@ -1,5 +1,6 @@
 package com._247ffa.status.api.stat.function;
 
+import java.util.List;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,14 @@ public class ServersOnline implements Function<StatFilter, Report<?>> {
 	@Override
 	public Report<?> apply(StatFilter filter) {
 		return reportService.getReport("v1statsservers", () -> {
+			List<com._247ffa.status.api.stat.model.ServersOnline> items = statDAO.getServersOnline();
+
+			items = reportService.removeNoise(items,
+					(previous, current) -> previous.getServersOnline() != current.getServersOnline());
+
 			return new Report<com._247ffa.status.api.stat.model.ServersOnline>(
-					"Server online status " + "for 247ffa.com hosted QE servers. Stats for the last seven days.",
-					statDAO.getServersOnline());
+					"Server online status for 247ffa.com hosted QE servers. Stats for the last seven days.",
+					items);
 		});
 	}
 

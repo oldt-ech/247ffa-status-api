@@ -1,5 +1,9 @@
 package com._247ffa.status.api.stat.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiPredicate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -9,7 +13,7 @@ import com._247ffa.status.api.stat.model.Report;
 
 @Service
 public class ReportService {
-	
+
 	@Autowired
 	private CacheManager cacheManager;
 
@@ -21,5 +25,21 @@ public class ReportService {
 		}
 
 		return (Report<?>) cache.get(report).get();
+	}
+
+	public <T> List<T> removeNoise(List<T> items, BiPredicate<T, T> predicate) {
+		List<T> filteredContent = new ArrayList<>();
+
+		filteredContent.add(items.iterator().next());
+		T previous = filteredContent.iterator().next();
+		for (T item : items) {
+			if (predicate.test(previous, item)) {
+				filteredContent.add(item);
+			}
+			previous = item;
+		}
+
+		filteredContent.add(items.get(items.size() - 1));
+		return filteredContent;
 	}
 }
