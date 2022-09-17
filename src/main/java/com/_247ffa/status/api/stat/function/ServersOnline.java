@@ -28,10 +28,10 @@ public class ServersOnline implements Function<StatFilter, Report<?>> {
 
 			items = reportService.removeNoise(items,
 					(previous, current) -> previous.getServersOnline() != current.getServersOnline()
-							|| (previous.getTime() - current.getTime() > Application.MILLISECONDS_IN_HOUR/20));
+							|| (previous.getTime() - current.getTime() > Application.MILLISECONDS_IN_HOUR));
 
 			return new Report<com._247ffa.status.api.stat.model.ServersOnline>(
-					"Server online status for 247ffa.com hosted QE servers. Stats for the last three days.", items);
+					"Servers online (max count of seven minute intervals) for 247ffa.com hosted QE servers. Stats for the last three days.", items);
 		});
 	}
 
