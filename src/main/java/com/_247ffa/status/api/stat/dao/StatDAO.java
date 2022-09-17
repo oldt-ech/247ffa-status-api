@@ -47,10 +47,11 @@ public class StatDAO {
 	public List<ConnectedPlayers> getConnectedPlayers() {
 		List<SqlParameter> params = new ArrayList<SqlParameter>();
 		params.add(new SqlParameter("@cutoff",
-				Date.from(LocalDateTime.now().minus(7, ChronoUnit.DAYS).toInstant(ZoneOffset.UTC))));
-		SqlQuerySpec query = new SqlQuerySpec("SELECT sum(c.currentPlayers - 1) as connectedPlayers, c.date as time from c"
-				+ " WHERE c.miniProfileId in ('1426333927','1426388016','1425838691','1128505857','1426512674','1426297538')"
-				+ " and c.currentPlayers > 0 and c.time >= @cutoff group by c.date"); // 0 = server offline
+				Date.from(LocalDateTime.now().minus(3, ChronoUnit.DAYS).toInstant(ZoneOffset.UTC))));
+		SqlQuerySpec query = new SqlQuerySpec(
+				"SELECT sum(c.currentPlayers - 1) as connectedPlayers, c.date as time from c"
+						+ " WHERE c.miniProfileId in ('1426333927','1426388016','1425838691','1128505857','1426512674','1426297538')"
+						+ " and c.currentPlayers > 0 and c.date >= @cutoff group by c.date", params); // 0 = server offline
 
 		return container.queryItems(query, new CosmosQueryRequestOptions(), ConnectedPlayers.class).stream().parallel()
 				.sorted((a, b) -> {
@@ -70,7 +71,7 @@ public class StatDAO {
 	public List<ServersOnline> getServersOnline() {
 		List<SqlParameter> params = new ArrayList<SqlParameter>();
 		params.add(new SqlParameter("@cutoff",
-				Date.from(LocalDateTime.now().minus(7, ChronoUnit.DAYS).toInstant(ZoneOffset.UTC))));
+				Date.from(LocalDateTime.now().minus(3, ChronoUnit.DAYS).toInstant(ZoneOffset.UTC))));
 		SqlQuerySpec query = new SqlQuerySpec("SELECT count(1) as serversOnline, c.date as time from c"
 				+ " WHERE c.miniProfileId in ('1426333927','1426388016','1425838691','1128505857','1426512674','1426297538')"
 				+ " and c.currentPlayers > 0 and c.date >= @cutoff group by c.date", params);
@@ -82,8 +83,8 @@ public class StatDAO {
 	}
 
 	public Stats getStats() {
-		String sql = "select value max(ok.connectedPlayers) from (SELECT sum(c.currentPlayers - 1) as connectedPlayers from c\r\n"
-				+ "	WHERE c.miniProfileId in ('1426333927','1426388016','1425838691','1128505857','1426512674','1426297538')\r\n"
+		String sql = "select value max(ok.connectedPlayers) from (SELECT sum(c.currentPlayers - 1) as connectedPlayers from c"
+				+ "	WHERE c.miniProfileId in ('1426333927','1426388016','1425838691','1128505857','1426512674','1426297538')"
 				+ "	and c.currentPlayers > 0 group by c.date) as ok";
 
 		Stats stats = new Stats();
