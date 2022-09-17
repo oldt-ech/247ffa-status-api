@@ -1,5 +1,7 @@
 package com._247ffa.status.api.status.function;
 
+import static java.util.stream.Collectors.toUnmodifiableList;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -14,11 +16,8 @@ import com._247ffa.status.api.status.model.ServerFilter;
 import com._247ffa.status.api.status.service.DocumentService;
 import com._247ffa.status.api.status.service.ExtractionService;
 
-import reactor.core.publisher.Flux;
-import reactor.core.scheduler.Schedulers;
-
 @Component("v1servers")
-public class Status implements Function<ServerFilter, Flux<Server>> {
+public class Status implements Function<ServerFilter, List<Server>> {
 
 	@Value("#{${urls}}")
 	private List<String> urls;
@@ -29,15 +28,15 @@ public class Status implements Function<ServerFilter, Flux<Server>> {
 	@Autowired
 	protected ExtractionService extractor;
 
-	public Flux<Server> apply(ServerFilter filter) {
-		return Flux.fromStream(urls.stream().map(url -> {
+	public List<Server> apply(ServerFilter filter) {
+		return urls.parallelStream().map(url -> { // async grab steam info
 			Optional<Document> doc = grabber.getDocument(url);
 			Server server = new Server();
 			server.setId(extractor.extractId(url));
 			doc.ifPresent(document -> server.setName(extractor.extractName(document))
 					.setSession(extractor.extractSession(document)));
+			System.out.println("grabbing");
 			return server;
-		})).subscribeOn(Schedulers.parallel());
+		}).collect(toUnmodifiableList());
 	}
-
 }
