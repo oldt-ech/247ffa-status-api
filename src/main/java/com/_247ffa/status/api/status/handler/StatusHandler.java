@@ -1,5 +1,6 @@
 package com._247ffa.status.api.status.handler;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.cloud.function.adapter.azure.FunctionInvoker;
@@ -15,9 +16,7 @@ import com.microsoft.azure.functions.annotation.AuthorizationLevel;
 import com.microsoft.azure.functions.annotation.FunctionName;
 import com.microsoft.azure.functions.annotation.HttpTrigger;
 
-import reactor.core.publisher.Flux;
-
-public class StatusHandler extends FunctionInvoker<ServerFilter, Flux<Server>> {
+public class StatusHandler extends FunctionInvoker<ServerFilter, List<Server>> {
 
 	@FunctionName("v1servers")
 	public HttpResponseMessage execute(@HttpTrigger(name = "request", route = "v1/servers", methods = {

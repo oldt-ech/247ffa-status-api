@@ -75,10 +75,19 @@ public class StatDAO {
 	public List<ServersOnline> getServersOnline() {
 		List<SqlParameter> params = new ArrayList<SqlParameter>();
 		params.add(new SqlParameter("@cutoff",
-				Date.from(LocalDateTime.now().minus(3, ChronoUnit.DAYS).toInstant(ZoneOffset.UTC))));
-		SqlQuerySpec query = new SqlQuerySpec("SELECT count(1) as serversOnline, c.date as time from c"
-				+ " WHERE c.miniProfileId in ('1426333927','1426388016','1425838691','1128505857','1426512674','1426297538')"
-				+ " and c.currentPlayers > 0 and c.date >= @cutoff group by c.date", params);
+				Date.from(LocalDateTime.now().minus(8, ChronoUnit.DAYS).toInstant(ZoneOffset.UTC))));
+
+		// query: get max grouping in 5 minute intervals (steam rich presence isn't 100%
+		// reliable, this is done to remove false outages, 5 mins should be enough for 2
+		// polls done 2 mins apart)
+		// subquery: get counts per poll
+		SqlQuerySpec query = new SqlQuerySpec(
+				"select max(servers.serversOnline) as serversOnline, floor(servers.time/300000)*300000 as time"
+						+ " from (SELECT count(1) as serversOnline, c.date as time from c"
+						+ " WHERE c.miniProfileId in ('1426333927','1426388016','1425838691','1128505857','1426512674','1426297538')"
+						+ " and c.currentPlayers > 0 and c.date > @cutoff group by c.date) as servers"
+						+ " group by floor(servers.time/300000)*300000",
+				params);
 
 		return container.queryItems(query, new CosmosQueryRequestOptions(), ServersOnline.class)
 				.collectSortedList((a, b) -> {
