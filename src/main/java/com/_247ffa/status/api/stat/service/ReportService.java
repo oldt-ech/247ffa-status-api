@@ -30,13 +30,17 @@ public class ReportService {
 	public <T> List<T> removeNoise(List<T> items, BiPredicate<T, T> predicate) {
 		List<T> filteredContent = new ArrayList<>();
 
+		if (items.isEmpty()) {
+			return items;
+		}
+			
 		filteredContent.add(items.iterator().next());
-		T previous = filteredContent.iterator().next();
+		T lastAdded = filteredContent.iterator().next();
 		for (T item : items) {
-			if (predicate.test(previous, item)) {
+			if (predicate.test(lastAdded, item)) {
 				filteredContent.add(item);
+				lastAdded = item;
 			}
-			previous = item;
 		}
 
 		filteredContent.add(items.get(items.size() - 1));
