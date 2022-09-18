@@ -28,7 +28,7 @@ public class ConnectedPlayers implements Function<StatFilter, Report<?>> {
 
 			items = reportService.removeNoise(items,
 					(previous, current) -> (previous.getConnectedPlayers() != current.getConnectedPlayers())
-							|| (previous.getTime() - current.getTime() > Application.MILLISECONDS_IN_HOUR));
+							|| (current.getTime() - previous.getTime() > Application.MILLISECONDS_IN_HOUR));
 
 			return new Report<com._247ffa.status.api.stat.model.ConnectedPlayers>(
 					"Player connection history for 247ffa.com hosted QE servers. "
