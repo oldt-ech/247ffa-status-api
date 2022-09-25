@@ -67,7 +67,7 @@ public class StatDAO {
 	public List<PopularMap> getPopularMaps() {
 		String sql = "select sum(c.currentPlayers - 1) as connectedPlayers, c.map as map FROM c"
 				+ " WHERE c.miniProfileId in ('1426333927','1426388016','1425838691','1128505857','1426512674','1426297538')"
-				+ " and c.currentPlayers > 0 group by c.map";
+				+ " and c.currentPlayers > 1 group by c.map";
 
 		return container.queryItems(sql, new CosmosQueryRequestOptions(), PopularMap.class).collectList().block();
 	}
@@ -98,7 +98,7 @@ public class StatDAO {
 	public Stats getStats() {
 		String sql = "select value max(ok.connectedPlayers) from (SELECT sum(c.currentPlayers - 1) as connectedPlayers from c"
 				+ "	WHERE c.miniProfileId in ('1426333927','1426388016','1425838691','1128505857','1426512674','1426297538')"
-				+ "	and c.currentPlayers > 0 group by c.date) as ok";
+				+ "	and c.currentPlayers > 1 group by c.date) as ok";
 
 		Stats stats = new Stats();
 		stats.setMaxPlayers(container.queryItems(sql, new CosmosQueryRequestOptions(), Integer.class).collectList()
