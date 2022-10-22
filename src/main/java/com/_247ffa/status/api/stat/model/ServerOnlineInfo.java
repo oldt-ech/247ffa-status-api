@@ -1,6 +1,6 @@
 package com._247ffa.status.api.stat.model;
 
-public class ServersOnline {
+public class ServerOnlineInfo {
 	private int serversOnline;
 	private long time;
 

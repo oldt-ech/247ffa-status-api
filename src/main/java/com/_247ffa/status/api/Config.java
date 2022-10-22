@@ -1,5 +1,6 @@
 package com._247ffa.status.api;
 
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.cache.CacheManager;
@@ -15,6 +16,10 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 @Configuration
 @EnableCaching
 public class Config {
+	public Config() {
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+	}
+	
 	@Bean
 	public Caffeine<?, ?> caffeineConfig() {
 		return Caffeine.newBuilder().expireAfterWrite(120, TimeUnit.SECONDS);
@@ -26,4 +31,5 @@ public class Config {
 		caffeineCacheManager.setCaffeine(caffeine);
 		return caffeineCacheManager;
 	}
+
 }

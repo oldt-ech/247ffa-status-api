@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 import com._247ffa.status.api.Application;
 import com._247ffa.status.api.stat.dao.StatDAO;
 import com._247ffa.status.api.stat.model.Report;
-import com._247ffa.status.api.stat.model.StatFilter;
+import com._247ffa.status.api.stat.model.ServersOnlineInput;
 import com._247ffa.status.api.stat.service.ReportService;
 
-@Component("v1statsservers")
-public class ServersOnline implements Function<StatFilter, Report<?>> {
+@Component("v1StatsServerOnline")
+public class ServerOnline implements Function<ServersOnlineInput, Report<?>> {
 
 	@Autowired
 	protected StatDAO statDAO;
@@ -22,16 +22,19 @@ public class ServersOnline implements Function<StatFilter, Report<?>> {
 	protected ReportService reportService;
 
 	@Override
-	public Report<?> apply(StatFilter filter) {
-		return reportService.getReport("v1statsservers", () -> {
-			List<com._247ffa.status.api.stat.model.ServersOnline> items = statDAO.getServersOnline();
+	public Report<?> apply(ServersOnlineInput input) {
+		return reportService.getReport("v1StatsServerOnline" + input.getId(), () -> {
+			List<com._247ffa.status.api.stat.model.ServerOnlineInfo> items = statDAO.getServerOnline(input.getId(),
+					input.getFrom());
 
 			items = reportService.removeNoise(items,
 					(previous, current) -> previous.getServersOnline() != current.getServersOnline()
 							|| (current.getTime() - previous.getTime() > Application.MILLISECONDS_IN_HOUR));
 
-			return new Report<com._247ffa.status.api.stat.model.ServersOnline>(
-					"Servers online (max count of seven minute intervals) for 247ffa.com hosted QE servers. Stats for the last three days.", items);
+			return new Report<com._247ffa.status.api.stat.model.ServerOnlineInfo>(
+					"Servers online (max count of seven minute intervals) for " + input.getId() + ". Stats since "
+							+ input.getFrom() + ". Requests cached for two minutes per server ID (not 'from' offset)",
+					items);
 		});
 	}
 
