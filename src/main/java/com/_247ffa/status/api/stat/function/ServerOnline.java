@@ -23,7 +23,7 @@ public class ServerOnline implements Function<ServersOnlineInput, Report<?>> {
 
 	@Override
 	public Report<?> apply(ServersOnlineInput input) {
-		return reportService.getReport("v1StatsServerOnline" + input.getId(), () -> {
+		return reportService.getReport("v1StatsServerOnline" + input.getId() + input.getFrom(), () -> {
 			List<com._247ffa.status.api.stat.model.ServerOnlineInfo> items = statDAO.getServerOnline(input.getId(),
 					input.getFrom());
 
