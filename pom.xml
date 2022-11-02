@@ -16,7 +16,7 @@
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 
-		<azure.functions.java.library.version>2.1.0</azure.functions.java.library.version>
+		<azure.functions.java.library.version>2.2.0</azure.functions.java.library.version>
 		<azure.functions.maven.plugin.version>1.21.0</azure.functions.maven.plugin.version>
 
 		<functionResourceGroup>247ffa-com</functionResourceGroup>
@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>com.azure</groupId>
 			<artifactId>azure-cosmos</artifactId>
-			<version>4.38.0</version>
+			<version>4.38.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
