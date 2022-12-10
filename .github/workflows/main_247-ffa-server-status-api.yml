@@ -12,7 +12,7 @@ on:
 env:
   AZURE_FUNCTIONAPP_NAME: 247-ffa-server-status-api # set this to your function app name on Azure
   PACKAGE_DIRECTORY: '.' # set this to the directory which contains pom.xml file
-  JAVA_VERSION: '11' # set this to the java version to use
+  JAVA_VERSION: '17' # set this to the java version to use
 
 jobs:
   build-and-deploy:
