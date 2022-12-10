@@ -12,10 +12,11 @@
 	</parent>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>17</maven.compiler.source>
-		<maven.compiler.target>17</maven.compiler.target>
 		<java.version>17</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+
 
 		<azure.functions.java.library.version>3.0.0</azure.functions.java.library.version>
 		<azure.functions.maven.plugin.version>1.21.0</azure.functions.maven.plugin.version>
@@ -123,7 +124,7 @@
 					<region>${functionAppRegion}</region>
 					<runtime>
 						<os>linux</os>
-						<javaVersion>11</javaVersion>
+						<javaVersion>${java.version}</javaVersion>
 					</runtime>
 					<appSettings>
 						<!-- Run Azure Function from package file by default -->
