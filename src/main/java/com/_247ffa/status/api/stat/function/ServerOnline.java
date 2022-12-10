@@ -33,7 +33,7 @@ public class ServerOnline implements Function<ServersOnlineInput, Report<?>> {
 
 			return new Report<com._247ffa.status.api.stat.model.ServerOnlineInfo>(
 					"Servers online (max count of seven minute intervals) for " + input.getId() + ". Stats since "
-							+ input.getFrom() + ". Requests cached for two minutes",
+							+ input.getFrom() + ".",
 					items);
 		});
 	}

@@ -16,14 +16,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-
-
 		<azure.functions.java.library.version>3.0.0</azure.functions.java.library.version>
 		<azure.functions.maven.plugin.version>1.21.0</azure.functions.maven.plugin.version>
-
 		<functionResourceGroup>247ffa-com</functionResourceGroup>
 		<functionAppName>247-ffa-server-status-api</functionAppName>
-
 		<functionAppRegion>canadacentral</functionAppRegion>
 		<stagingDirectory>${project.build.directory}/azure-functions/${functionAppName}</stagingDirectory>
 		<start-class>com._247ffa.status.api.Application</start-class>
