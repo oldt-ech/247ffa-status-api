@@ -12,7 +12,7 @@ on:
 env:
   AZURE_FUNCTIONAPP_NAME: 247-ffa-server-status-api # set this to your function app name on Azure
   PACKAGE_DIRECTORY: '.' # set this to the directory which contains pom.xml file
-  JAVA_VERSION: '17' # set this to the java version to use
+  JAVA_VERSION: '11' # set this to the java version to use
 
 jobs:
   build-and-deploy:
@@ -38,6 +38,6 @@ jobs:
         with:
           app-name: '247-ffa-server-status-api'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ACF9CBB6F32F469B8ED4CE5828C8CD9F }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BDA81C9762124E1198F151DDC0A6A560 }}
           package: '${{ env.PACKAGE_DIRECTORY }}'
           respect-pom-xml: true
